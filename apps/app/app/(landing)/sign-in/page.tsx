@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import { AuthHeading, AuthShell } from "@/components/auth-shell";
 import { getSession } from "@/lib/session";
 import { getServerQueryClient, getServerTrpc } from "@/lib/trpc/server";
+import { EmailPasswordSignIn } from "./email-password-sign-in";
 import { SocialSignIn } from "./social-sign-in";
 import { type SsoProvider, SsoSignIn } from "./sso-sign-in";
 
@@ -107,8 +108,23 @@ async function SignIn({
 		<>
 			<AuthHeading
 				title="Welcome back"
-				description="Sign in with your account to continue."
+				description="Sign in with your email and password to continue."
 			/>
+
+			<EmailPasswordSignIn />
+
+			{showSso || social.length > 0 ? (
+				<div className="relative my-2 w-full">
+					<div className="absolute inset-0 flex items-center">
+						<span className="w-full border-t" />
+					</div>
+					<div className="relative flex justify-center text-xs uppercase">
+						<span className="bg-background px-2 text-muted-foreground">
+							Or continue with
+						</span>
+					</div>
+				</div>
+			) : null}
 
 			{showSso ? <SsoSignIn providers={providers} /> : null}
 			{social.map((provider) => (
