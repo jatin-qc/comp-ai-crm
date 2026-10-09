@@ -25,7 +25,7 @@ export class EnvironmentVariables {
 	@IsInt()
 	@Min(1)
 	@Max(65535)
-	PORT = 3001;
+	PORT = 4001;
 
 	@IsString()
 	@MinLength(1, {
@@ -126,6 +126,35 @@ export class EnvironmentVariables {
 	@IsOptional()
 	@IsString()
 	CRM_TELEMETRY_DISABLED?: string;
+
+	@IsOptional()
+	@IsString()
+	SMTP_HOST?: string;
+
+	@IsOptional()
+	@Type(() => Number)
+	@IsInt()
+	SMTP_PORT?: number;
+
+	@IsOptional()
+	@IsString()
+	SMTP_USER?: string;
+
+	@IsOptional()
+	@IsString()
+	SMTP_PASS?: string;
+
+	@IsOptional()
+	@IsString()
+	SMTP_SECURE?: string;
+
+	@IsOptional()
+	@IsString()
+	SMTP_IGNORE_TLS_ERRORS?: string;
+
+	@IsOptional()
+	@IsString()
+	EMAIL_FROM?: string;
 }
 
 export type RawEnvironment = Record<string, string | undefined>;

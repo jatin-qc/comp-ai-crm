@@ -5,7 +5,7 @@ async function bootstrap() {
 	const app = await createApp();
 	app.enableShutdownHooks();
 
-	const port = process.env.PORT ?? 3001;
+	const port = process.env.PORT ?? 4001;
 	await app.listen(port);
 
 	new Logger("Bootstrap").log({

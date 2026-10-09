@@ -23,7 +23,9 @@
 		"@crm/db": "workspace:*",
 		"@crm/env": "workspace:*",
 		"@crm/validation": "workspace:*",
+		"@types/nodemailer": "^8.0.2",
 		"better-auth": "^1.6.25",
+		"nodemailer": "^10.0.16",
 		"zod": "^4.4.3"
 	},
 	"peerDependencies": {

@@ -1,19 +1,42 @@
 import type { Metadata } from "next";
+import { redirect, unstable_rethrow } from "next/navigation";
+import { Suspense } from "react";
 import { AuthHeading, AuthShell } from "@/components/auth-shell";
+import { getSession } from "@/lib/session";
 import { ForgotPasswordForm } from "./forgot-password-form";
 
 export const metadata: Metadata = {
 	title: "Forgot password",
 };
 
-export default function ForgotPasswordPage() {
+export const instant = false;
+
+async function currentSession() {
+	try {
+		return await getSession();
+	} catch (error) {
+		unstable_rethrow(error);
+		console.error("Forgot-password: could not read the session.", error);
+		return null;
+	}
+}
+
+export default async function ForgotPasswordPage() {
+	const session = await currentSession();
+
+	if (session) {
+		redirect("/");
+	}
+
 	return (
 		<AuthShell>
 			<AuthHeading
 				title="Reset your password"
-				description="Enter your email address and we will send you a link to reset your password."
+				description="Enter your email address to receive a verification code."
 			/>
-			<ForgotPasswordForm />
+			<Suspense fallback={null}>
+				<ForgotPasswordForm />
+			</Suspense>
 		</AuthShell>
 	);
 }

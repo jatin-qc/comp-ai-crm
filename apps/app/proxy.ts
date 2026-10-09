@@ -14,6 +14,13 @@ const LANDING_PATH = "/";
 
 const SIGN_IN_PATH = "/sign-in";
 
+const AUTH_PATHS = [
+	SIGN_IN_PATH,
+	"/sign-up",
+	"/forgot-password",
+	"/reset-password",
+];
+
 const UNGATED = ["/grant-access", "/eve"];
 
 const ANONYMOUS = ["/t"];
@@ -23,7 +30,7 @@ const SECTIONS = ["/companies", "/contacts", "/deals", "/settings"];
 export async function proxy(request: NextRequest) {
 	const { pathname } = request.nextUrl;
 
-	if (pathname === SIGN_IN_PATH) return NextResponse.next();
+	if (AUTH_PATHS.includes(pathname)) return NextResponse.next();
 
 	if (isAnonymous(pathname)) return NextResponse.next();
 

@@ -21,13 +21,16 @@
 		"db:reset": "turbo run db:reset",
 		"db:seed": "turbo run db:seed",
 		"db:studio": "turbo run db:studio",
-		"db:test": "bun run --filter=@crm/db db:test"
+		"db:test": "bun run --filter=@crm/db db:test",
+		"email:test": "bun packages/auth/src/test-smtp.ts"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.4.10",
+		"@electric-sql/pglite": "^0.5.8",
 		"@oxlint/plugins": "1.78.0",
 		"knip": "6.32.2",
 		"oxlint": "1.78.0",
+		"pg-gateway": "^0.3.0-beta.4",
 		"turbo": "^2.10.8",
 		"typescript": "5.9.2"
 	},
@@ -44,5 +47,8 @@
 	"workspaces": [
 		"apps/*",
 		"packages/*"
-	]
+	],
+	"dependencies": {
+		"date-fns": "^4.4.0"
+	}
 }

@@ -90,6 +90,16 @@ export function EmailPasswordSignIn() {
 				{pending ? <Spinner data-icon="inline-start" /> : null}
 				Sign In
 			</Button>
+
+			<div className="text-center mt-2 text-xs text-muted-foreground">
+				Don&apos;t have an account?{" "}
+				<Link
+					href="/sign-up"
+					className="text-foreground hover:underline underline-offset-4"
+				>
+					Sign up
+				</Link>
+			</div>
 		</form>
 	);
 }

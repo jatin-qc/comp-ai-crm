@@ -1,7 +1,7 @@
 import "@crm/env/load";
 
-const DEFAULT_API_URL = "http://localhost:3001";
-const DEFAULT_APP_URL = "http://localhost:3000";
+const DEFAULT_API_URL = "http://localhost:4001";
+const DEFAULT_APP_URL = "http://localhost:4000";
 const DEFAULT_MICROSOFT_TENANT = "common";
 
 const optional = (key: string): string | undefined => {

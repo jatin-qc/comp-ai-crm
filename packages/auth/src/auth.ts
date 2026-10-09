@@ -5,10 +5,12 @@ import { schemas } from "@crm/validation";
 import { type BetterAuthOptions, betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { APIError } from "better-auth/api";
+import { emailOTP } from "better-auth/plugins/email-otp";
 import { genericOAuth } from "better-auth/plugins/generic-oauth";
 import { organization } from "better-auth/plugins/organization";
 import { API_KEY_EXPIRATION, API_KEY_HEADER, API_KEY_PREFIX } from "./api-keys";
 import { AUTH_COOKIE_PREFIX } from "./cookies";
+import { sendOtpEmail } from "./email";
 import { env } from "./env";
 import { ensureWorkspaceMembership } from "./organization";
 import {
@@ -245,6 +247,13 @@ export const auth = betterAuth({
 			keyExpiration: {
 				maxExpiresIn: API_KEY_EXPIRATION.maxDays,
 				minExpiresIn: API_KEY_EXPIRATION.minDays,
+			},
+		}),
+
+		emailOTP({
+			expiresIn: 300,
+			async sendVerificationOTP({ email, otp }) {
+				await sendOtpEmail(email, otp);
 			},
 		}),
 	],
