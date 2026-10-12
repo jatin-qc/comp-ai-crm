@@ -74,7 +74,7 @@ export function SignUpForm() {
 				<Input
 					id="signup-name"
 					type="text"
-					placeholder="Jane Doe"
+					placeholder="John Doe"
 					value={name}
 					onChange={(e) => setName(e.target.value)}
 					disabled={pending}
@@ -84,7 +84,7 @@ export function SignUpForm() {
 			</div>
 
 			<div className="flex flex-col gap-1.5">
-				<Label htmlFor="signup-email">Email</Label>
+				<Label htmlFor="signup-email">Email Address</Label>
 				<Input
 					id="signup-email"
 					type="email"
@@ -134,7 +134,7 @@ export function SignUpForm() {
 				Already have an account?{" "}
 				<Link
 					href="/sign-in"
-					className="text-foreground hover:underline underline-offset-4"
+					className="text-foreground underline-offset-4 hover:underline font-medium"
 				>
 					Sign in
 				</Link>

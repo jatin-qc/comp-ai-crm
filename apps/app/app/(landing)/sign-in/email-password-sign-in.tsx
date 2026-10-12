@@ -95,7 +95,7 @@ export function EmailPasswordSignIn() {
 				Don&apos;t have an account?{" "}
 				<Link
 					href="/sign-up"
-					className="text-foreground hover:underline underline-offset-4"
+					className="text-foreground underline-offset-4 hover:underline font-medium"
 				>
 					Sign up
 				</Link>
