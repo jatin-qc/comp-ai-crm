@@ -34,6 +34,10 @@ export class EnvironmentVariables {
 	})
 	DATABASE_URL!: string;
 
+	@IsOptional()
+	@IsString()
+	PROD_DATABASE_URL?: string;
+
 	@IsString()
 	@MinLength(32, {
 		message:
