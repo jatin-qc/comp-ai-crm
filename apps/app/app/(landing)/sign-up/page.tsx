@@ -9,6 +9,8 @@ export const metadata: Metadata = {
 	title: "Sign up",
 };
 
+export const instant = false;
+
 async function currentSession() {
 	try {
 		return await getSession();
@@ -19,7 +21,7 @@ async function currentSession() {
 	}
 }
 
-export default async function SignUpPage() {
+async function SignUp() {
 	const session = await currentSession();
 
 	if (session) {
@@ -27,7 +29,7 @@ export default async function SignUpPage() {
 	}
 
 	return (
-		<AuthShell>
+		<>
 			<AuthHeading
 				title="Get started"
 				description="Create an account to access the workspace."
@@ -35,7 +37,16 @@ export default async function SignUpPage() {
 			<Suspense fallback={null}>
 				<SignUpForm />
 			</Suspense>
-		</AuthShell>
+		</>
 	);
 }
 
+export default function SignUpPage() {
+	return (
+		<AuthShell>
+			<Suspense fallback={null}>
+				<SignUp />
+			</Suspense>
+		</AuthShell>
+	);
+}

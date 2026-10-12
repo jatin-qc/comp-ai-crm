@@ -9,6 +9,8 @@ export const metadata: Metadata = {
 	title: "Reset password",
 };
 
+export const instant = false;
+
 async function currentSession() {
 	try {
 		return await getSession();
@@ -19,7 +21,7 @@ async function currentSession() {
 	}
 }
 
-export default async function ResetPasswordPage() {
+async function ResetPassword() {
 	const session = await currentSession();
 
 	if (session) {
@@ -27,13 +29,23 @@ export default async function ResetPasswordPage() {
 	}
 
 	return (
-		<AuthShell>
+		<>
 			<AuthHeading
 				title="Create new password"
 				description="Please enter your new password below."
 			/>
 			<Suspense fallback={null}>
 				<ResetPasswordForm />
+			</Suspense>
+		</>
+	);
+}
+
+export default function ResetPasswordPage() {
+	return (
+		<AuthShell>
+			<Suspense fallback={null}>
+				<ResetPassword />
 			</Suspense>
 		</AuthShell>
 	);

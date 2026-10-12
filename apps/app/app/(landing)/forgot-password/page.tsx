@@ -21,7 +21,7 @@ async function currentSession() {
 	}
 }
 
-export default async function ForgotPasswordPage() {
+async function ForgotPassword() {
 	const session = await currentSession();
 
 	if (session) {
@@ -29,13 +29,23 @@ export default async function ForgotPasswordPage() {
 	}
 
 	return (
-		<AuthShell>
+		<>
 			<AuthHeading
 				title="Reset your password"
 				description="Enter your email address to receive a verification code."
 			/>
 			<Suspense fallback={null}>
 				<ForgotPasswordForm />
+			</Suspense>
+		</>
+	);
+}
+
+export default function ForgotPasswordPage() {
+	return (
+		<AuthShell>
+			<Suspense fallback={null}>
+				<ForgotPassword />
 			</Suspense>
 		</AuthShell>
 	);
