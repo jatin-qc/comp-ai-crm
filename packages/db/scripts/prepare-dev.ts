@@ -3,9 +3,21 @@ import { join } from "node:path";
 const directory = join(import.meta.dir, "..");
 
 await run([process.execPath, "scripts/require-local-db.ts", "dev"]);
-const [migration, generation] = await Promise.all([
-	execute([process.execPath, "run", "prisma", "migrate", "deploy"]),
-	execute([process.execPath, "run", "prisma", "generate"]),
+let migration = await execute([
+	process.execPath,
+	"run",
+	"prisma",
+	"migrate",
+	"deploy",
+]);
+if (migration !== 0) {
+	migration = await execute([process.execPath, "run", "prisma", "db", "push"]);
+}
+const generation = await execute([
+	process.execPath,
+	"run",
+	"prisma",
+	"generate",
 ]);
 
 if (migration !== 0) process.exit(migration);
