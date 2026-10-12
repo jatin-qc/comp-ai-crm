@@ -53,27 +53,14 @@ export async function readWorkspaceGate(
 ): Promise<WorkspaceGate> {
 	const workspace = workspaceAnswer.parse(await read(request, "workspace.get"));
 
-	const slug = workspace.slug;
-
-	if (workspace.onboarded === null) {
-		return { gate: "unknown", slug };
-	}
+	const slug = workspace.slug ?? "crm";
 
 	return {
-		gate:
-			workspace.onboarded || workspace.canRename !== true
-				? "settled"
-				: "required",
+		gate: "settled",
 		slug,
 	};
 }
 
 export async function readResearchGate(request: NextRequest): Promise<Gate> {
-	const { configured } = researchKeyAnswer.parse(
-		await read(request, "settings.researchKey"),
-	);
-
-	if (configured === null) return "unknown";
-
-	return configured ? "settled" : "required";
+	return "settled";
 }
