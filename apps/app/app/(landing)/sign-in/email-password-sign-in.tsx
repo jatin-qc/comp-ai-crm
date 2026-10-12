@@ -28,13 +28,14 @@ export function EmailPasswordSignIn() {
 			const res = await signIn.email({
 				email: email.trim().toLowerCase(),
 				password,
+				callbackURL: "/crm",
 			});
 
 			if (res.error) {
 				toast.error(res.error.message ?? "Invalid email or password.");
 			} else {
 				toast.success("Signed in successfully!");
-				window.location.href = "/";
+				window.location.replace("/crm");
 			}
 		} catch (error) {
 			toast.error(

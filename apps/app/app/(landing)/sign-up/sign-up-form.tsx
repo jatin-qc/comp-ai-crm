@@ -47,13 +47,14 @@ export function SignUpForm() {
 				email: email.trim().toLowerCase(),
 				password,
 				name: name.trim(),
+				callbackURL: "/crm",
 			});
 
 			if (res.error) {
 				toast.error(res.error.message ?? "Could not create account.");
 			} else {
 				toast.success("Account created successfully!");
-				window.location.href = "/";
+				window.location.replace("/crm");
 			}
 		} catch (error) {
 			toast.error(

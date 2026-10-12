@@ -63,7 +63,17 @@ export const env = {
 	microsoft: microsoftCredentials(),
 	slack: slackCredentials(),
 	cookieDomain: optional("AUTH_COOKIE_DOMAIN"),
-	trustedOrigins: [...new Set([...appUrls, apiUrl])],
+	trustedOrigins: [
+		...new Set([
+			...appUrls,
+			apiUrl,
+			"http://localhost:4000",
+			"http://localhost:4001",
+			"http://localhost:3000",
+			"http://localhost:3001",
+			"https://sales-crm.quessit.com",
+		]),
+	],
 	isProduction: process.env.NODE_ENV === "production",
 } as const;
 
