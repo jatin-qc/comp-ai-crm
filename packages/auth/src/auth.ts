@@ -112,7 +112,7 @@ export const auth = betterAuth({
 	advanced: {
 		cookiePrefix: AUTH_COOKIE_PREFIX,
 
-		useSecureCookies: env.isProduction,
+		useSecureCookies: false,
 		...(env.cookieDomain && {
 			crossSubDomainCookies: {
 				enabled: true,
