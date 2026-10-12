@@ -53,8 +53,7 @@ export function SignUpForm() {
 				toast.error(res.error.message ?? "Could not create account.");
 			} else {
 				toast.success("Account created successfully!");
-				router.push("/");
-				router.refresh();
+				window.location.href = "/";
 			}
 		} catch (error) {
 			toast.error(

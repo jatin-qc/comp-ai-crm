@@ -34,8 +34,7 @@ export function EmailPasswordSignIn() {
 				toast.error(res.error.message ?? "Invalid email or password.");
 			} else {
 				toast.success("Signed in successfully!");
-				router.push("/");
-				router.refresh();
+				window.location.href = "/";
 			}
 		} catch (error) {
 			toast.error(
