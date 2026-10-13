@@ -10,7 +10,9 @@ import {
 	FieldType,
 	RateSource,
 } from "../src/generated/prisma/enums";
+import { hashPassword } from "better-auth/crypto";
 import { readReportingCurrency, SETTINGS_ID } from "../src/settings";
+import { WORKSPACE_ID } from "../src/workspace";
 
 function makeRandom(seed: number): () => number {
 	let a = seed;
@@ -367,6 +369,92 @@ async function seedOwners(): Promise<string[]> {
 	);
 
 	return created.map((user) => user.id);
+}
+
+const ADMIN_USERS = [
+	{
+		name: "Sales Admin",
+		email: "salesadmin@quesscorp.com",
+		password: "quess@123",
+		role: "admin",
+	},
+] as const;
+
+async function seedAdmins(): Promise<void> {
+	await db.organization.upsert({
+		where: { id: WORKSPACE_ID },
+		create: {
+			id: WORKSPACE_ID,
+			name: "CRM",
+			slug: "crm",
+			createdAt: new Date(),
+		},
+		update: {},
+	});
+
+	for (const admin of ADMIN_USERS) {
+		const user = await db.user.upsert({
+			where: { email: admin.email },
+			create: {
+				id: `admin-${slug(admin.name)}`,
+				name: admin.name,
+				email: admin.email,
+				emailVerified: true,
+				updatedAt: new Date(),
+			},
+			update: {
+				name: admin.name,
+				emailVerified: true,
+			},
+		});
+
+		const hashedPassword = await hashPassword(admin.password);
+
+		const existingAccount = await db.account.findFirst({
+			where: { userId: user.id, providerId: "credential" },
+		});
+
+		if (existingAccount) {
+			await db.account.update({
+				where: { id: existingAccount.id },
+				data: {
+					password: hashedPassword,
+					updatedAt: new Date(),
+				},
+			});
+		} else {
+			await db.account.create({
+				data: {
+					id: `acc-${user.id}`,
+					accountId: user.id,
+					providerId: "credential",
+					userId: user.id,
+					password: hashedPassword,
+					createdAt: new Date(),
+					updatedAt: new Date(),
+				},
+			});
+		}
+
+		await db.member.upsert({
+			where: {
+				organizationId_userId: {
+					organizationId: WORKSPACE_ID,
+					userId: user.id,
+				},
+			},
+			create: {
+				id: `member-${user.id}`,
+				organizationId: WORKSPACE_ID,
+				userId: user.id,
+				role: admin.role,
+				createdAt: new Date(),
+			},
+			update: {
+				role: admin.role,
+			},
+		});
+	}
 }
 
 async function seedCompanies(
@@ -994,6 +1082,7 @@ async function seedActivities(
 async function main() {
 	const rates = await seedRates();
 	const ownerIds = await seedOwners();
+	await seedAdmins();
 	const companies = await seedCompanies(ownerIds);
 	const contacts = await seedContacts(companies, ownerIds);
 	const deals = await seedDeals(companies, contacts, ownerIds);
