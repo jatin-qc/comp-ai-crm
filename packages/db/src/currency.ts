@@ -18,6 +18,9 @@ const CURRENCY_LIST: readonly CurrencyMeta[] = [
 	{ code: "HKD", name: "Hong Kong Dollar", minorUnits: 2 },
 	{ code: "SGD", name: "Singapore Dollar", minorUnits: 2 },
 	{ code: "ZAR", name: "South African Rand", minorUnits: 2 },
+	{ code: "INR", name: "Indian Rupee", minorUnits: 2 },
+	{ code: "AED", name: "UAE Dirham", minorUnits: 2 },
+	{ code: "SAR", name: "Saudi Riyal", minorUnits: 2 },
 ] as const;
 
 export const CURRENCIES = CURRENCY_LIST;
