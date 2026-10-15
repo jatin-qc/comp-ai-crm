@@ -1,5 +1,27 @@
 # Changelog
 
+## [1.16.0](https://github.com/jatin-qc/comp-ai-crm/compare/v1.15.3...v1.16.0) (2026-10-15)
+
+
+### Features
+
+* add INR, AED, and SAR supported currencies ([3b4c399](https://github.com/jatin-qc/comp-ai-crm/commit/3b4c399dac79b2c2165df8cf2b135341c65c4705))
+* add salesadmin account to seed script ([5b2718f](https://github.com/jatin-qc/comp-ai-crm/commit/5b2718ff0a518edc59e0d23a741a49ac4e085818))
+* configure Google Gemini agent model and embedded local database ([bdc71a0](https://github.com/jatin-qc/comp-ai-crm/commit/bdc71a02379b44946dd00cefef991cf8c30544f5))
+
+
+### Fixes
+
+* add missing chat and agent detail dynamic route pages ([1ee4aa2](https://github.com/jatin-qc/comp-ai-crm/commit/1ee4aa21476bb1f1df665890b3b28039d3a79d8e))
+* align auth cookie configuration and restore dark auth theme ([1e02039](https://github.com/jatin-qc/comp-ai-crm/commit/1e02039590f2bcf6b69eef6500dae1c4c2b899ee))
+* bundle nodemailer and wrap auth pages in suspense ([c2ab0be](https://github.com/jatin-qc/comp-ai-crm/commit/c2ab0be2e5370228ee4ec4a441733ad49f439eff))
+* explicit redirect to /crm on sign in and add trusted origins ([1f26c47](https://github.com/jatin-qc/comp-ai-crm/commit/1f26c47c181300d375c2b7897ae7153759dcbd38))
+* fallback to db push in prepare-dev ([f867218](https://github.com/jatin-qc/comp-ai-crm/commit/f8672182e0ab885effb9993d7010033b11b18465))
+* pass through prod database env in turbo ([a80b04f](https://github.com/jatin-qc/comp-ai-crm/commit/a80b04fcf4d7af89dbc54c4882cde3ad962c3b3b))
+* remove comp ai branding and footer attribution ([a8bb6eb](https://github.com/jatin-qc/comp-ai-crm/commit/a8bb6eb9ac8cde765e83968da08c7fcde7cfc535))
+* resolve redirect loop on research gate and fix auth styling ([c40ec57](https://github.com/jatin-qc/comp-ai-crm/commit/c40ec5766d9b7301c0aa2e4d21c168a3c208c37b))
+* use window.location.href for post-auth navigation ([5ea5569](https://github.com/jatin-qc/comp-ai-crm/commit/5ea55692371666562d5997d78dca1b4b96bd3262))
+
 ## [1.15.3](https://github.com/trycompai/crm/compare/v1.15.2...v1.15.3) (2026-08-21)
 
 
