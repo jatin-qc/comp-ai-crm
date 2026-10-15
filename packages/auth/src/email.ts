@@ -13,13 +13,19 @@ export function getEmailTransporter(): Transporter | null {
 	const secure = process.env.SMTP_SECURE === "true" || port === 465;
 	const ignoreTls = process.env.SMTP_IGNORE_TLS_ERRORS === "true";
 
-	return nodemailer.createTransport({
+	const transportOptions: Parameters<typeof nodemailer.createTransport>[0] = {
 		host,
 		port,
 		secure,
-		...(user && pass ? { auth: { user, pass } } : {}),
-		...(ignoreTls ? { tls: { rejectUnauthorized: false } } : {}),
-	});
+	};
+	if (user && pass) {
+		transportOptions.auth = { user, pass };
+	}
+	if (ignoreTls) {
+		transportOptions.tls = { rejectUnauthorized: false };
+	}
+
+	return nodemailer.createTransport(transportOptions);
 }
 
 export async function verifySmtpConnection(): Promise<boolean> {
@@ -37,8 +43,12 @@ export async function verifySmtpConnection(): Promise<boolean> {
 	}
 }
 
-export async function sendOtpEmail(email: string, otp: string): Promise<boolean> {
-	const from = process.env.EMAIL_FROM ?? "Quess Agentic CRM <noreply-crm@quesscorp.com>";
+export async function sendOtpEmail(
+	email: string,
+	otp: string,
+): Promise<boolean> {
+	const from =
+		process.env.EMAIL_FROM ?? "Quess Agentic CRM <noreply-crm@quesscorp.com>";
 
 	console.log(`\n========================================`);
 	console.log(`[AUTH OTP] Password Reset Code for ${email}: ${otp}`);
@@ -96,7 +106,9 @@ export async function sendOtpEmail(email: string, otp: string): Promise<boolean>
 </html>`,
 		});
 
-		console.log(`[AUTH EMAIL] Successfully delivered OTP email via SMTP to ${email}`);
+		console.log(
+			`[AUTH EMAIL] Successfully delivered OTP email via SMTP to ${email}`,
+		);
 		return true;
 	} catch (error) {
 		console.error("Failed to deliver OTP email via SMTP:", error);

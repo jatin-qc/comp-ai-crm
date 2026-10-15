@@ -1,3 +1,4 @@
+import { google } from "@ai-sdk/google";
 import { db } from "@crm/db";
 import { DEFAULT_AGENT_MODEL } from "@crm/db/settings";
 import { defineAgent, defineDynamic } from "eve";
@@ -8,7 +9,9 @@ export default defineAgent({
 	description:
 		"Execute one immutable deployed CRM agent version and persist its result and every side effect.",
 	model: defineDynamic({
-		fallback: DEFAULT_AGENT_MODEL.id,
+		fallback: (process.env.GOOGLE_GENERATIVE_AI_API_KEY
+			? google("gemini-flash-lite-latest")
+			: DEFAULT_AGENT_MODEL.id) as any,
 		events: {
 			"session.started": async (_event, ctx) => {
 				if (purposeOf(ctx) !== "team-agent") return null;
@@ -32,6 +35,10 @@ export default defineAgent({
 			},
 		},
 	}),
+	modelContextWindowTokens: 1_000_000,
+	compaction: {
+		modelContextWindowTokens: 1_000_000,
+	},
 	outputSchema: z.object({
 		summary: z.string().min(1).max(1000),
 		result: z.record(z.string(), z.unknown()).nullable(),
